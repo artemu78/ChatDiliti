@@ -1,10 +1,10 @@
 # Facebook Post Hider
 
-Facebook Post Hider is a Chrome extension that hides all Facebook posts by default and displays a "Show Post" button for each hidden post. Users can reveal the original content of individual posts by clicking the corresponding "Show Post" button.
+Facebook Post Hider is a Chrome extension that hides all Facebook posts by default and displays a "Show Post" button for each hidden post. Users can reveal the original content of individual posts by clicking the corresponding "Show Post" button. The extension also supports infinite scrolling, processing new posts as they are loaded.
 
 ## Core Idea
 
-The main goal of this extension is to give users control over the content they see on their Facebook feed. By hiding posts by default, users can choose to view only the posts they find interesting, reducing distractions and improving their overall experience on the platform.
+The primary goal of this extension is to provide users with control over the content they see on their Facebook feed. By hiding posts by default, users can choose to view only the posts they find interesting, reducing distractions and improving their overall experience on the platform.
 
 ## Installation
 
@@ -24,4 +24,4 @@ To install the Facebook Post Hider Chrome extension, follow these steps:
 
 ## Note
 
-This extension may not work with infinite scrolling on Facebook. You may need to adapt the code to handle new posts loaded as you scroll down the page.
+This extension uses a MutationObserver to handle infinite scrolling on Facebook. If Facebook's DOM structure changes, you may need to adjust the selectors in the `content.js` file to locate the post author and date correctly.
