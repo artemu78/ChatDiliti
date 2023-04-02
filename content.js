@@ -12,6 +12,7 @@ const createShowPostButton = (post) => {
 const hidePosts = () => {
   const posts = document.querySelectorAll("[data-pagelet^='FeedUnit']");
   posts.forEach((post) => {
+    console.log('Hidden post:', post.innerText);
     post.style.display = 'none';
     createShowPostButton(post);
   });
