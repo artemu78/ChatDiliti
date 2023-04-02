@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Facebook Post Hider",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Hide all Facebook posts and show a simple button instead.",
     "action": {
       "default_popup": "popup.html",
