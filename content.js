@@ -10,16 +10,17 @@ const createShowPostButton = (post) => {
 };
 
 const hidePost = (post) => {
-  const authorElement = post.querySelector("strong a, h2 a");
+  const authorElement = post.querySelector("h2 span a");
   const author = authorElement ? authorElement.innerText : "Author not found";
 
-  const timeElement = post.querySelector("abbr");
-  const postDate = timeElement ? timeElement.getAttribute("title") : "Date not found";
+  const timeElement = post.querySelector("div[data-testid='post_context']>a abbr");
+  const postDate = timeElement ? timeElement.getAttribute("aria-label") : "Date not found";
 
   console.log('Hidden post:', { author, postDate });
   post.style.display = 'none';
   createShowPostButton(post);
 };
+
 
 const processPosts = () => {
   const posts = document.querySelectorAll("[data-pagelet^='FeedUnit']");
