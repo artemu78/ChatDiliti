@@ -1,4 +1,4 @@
-const createShowPostButton = (post) => {
+const createShowPostButton = (post: HTMLElement): void => {
   const authorAndDate = post.querySelector("h4")?.parentElement?.parentElement?.parentElement?.innerText || 'Author and date not found';
 
   const button = document.createElement('button');
@@ -8,17 +8,17 @@ const createShowPostButton = (post) => {
     post.style.display = 'block';
     button.style.display = 'none';
   };
-  post.parentElement.insertBefore(button, post);
+  post.parentElement?.insertBefore(button, post);
 };
 
-const hidePost = (post) => {
+const hidePost = (post: HTMLElement): void => {
   post.style.display = 'none';
   createShowPostButton(post);
 };
 
 
-const processPosts = () => {
-  const posts = document.querySelectorAll("[data-pagelet^='FeedUnit']");
+const processPosts = (): void => {
+  const posts = document.querySelectorAll<HTMLElement>("[data-pagelet^='FeedUnit']");
   posts.forEach((post) => {
     if (!post.classList.contains('processed')) {
       hidePost(post);
@@ -27,7 +27,7 @@ const processPosts = () => {
   });
 };
 
-const observeFeed = () => {
+const observeFeed = (): void => {
   const feedContainer = document.querySelector('[role="feed"]');
   if (!feedContainer) {
     setTimeout(observeFeed, 1000);

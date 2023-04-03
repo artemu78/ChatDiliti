@@ -1,23 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Facebook Post Hider",
-  "version": "1.5",
-  "description": "Hide all Facebook posts and show a simple button instead.",
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "48": "icon48.png"
-    }
-  },
+  "version": "2.0.0",
+  "description": "Hide Facebook posts by default and display a Show Post button.",
   "permissions": ["activeTab"],
-  "icons": {
-    "48": "icon48.png"
-  },
   "content_scripts": [
     {
-      "matches": ["https://www.facebook.com/*"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
+      "matches": ["*://*.facebook.com/*"],
+      "css": ["styles.css"],
+      "js": ["dist/content.js"]
     }
   ]
 }
