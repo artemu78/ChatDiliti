@@ -1,6 +1,6 @@
 {
   "name": "chatdiliti",
-  "version": "1.0.0",
+  "version": "2.0.4",
   "description": "Facebook Post Hider is a Chrome extension that hides all Facebook posts by default and displays a \"Show Post\" button for each hidden post. Users can reveal the original content of individual posts by clicking the corresponding \"Show Post\" button. The extension also supports infinite scrolling, processing new posts as they are loaded.",
   "main": "content.js",
   "scripts": {
