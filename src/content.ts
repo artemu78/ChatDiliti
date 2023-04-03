@@ -2,9 +2,15 @@ const createShowPostButton = (post: HTMLElement): void => {
   const authorAndDate =
     post.querySelector('h4')?.parentElement?.parentElement?.parentElement
       ?.innerText || 'Author and date not found';
+  const svg = post.querySelector('svg')?.cloneNode(true) as HTMLElement;
+  svg.style.flexShrink = '0';
+  svg.style.marginRight = '8px';
+  const text = document.createTextNode(authorAndDate);
 
   const button = document.createElement('button');
-  button.innerHTML = `${authorAndDate}`;
+  button.appendChild(svg);
+  button.appendChild(text);
+
   button.className = 'show-post-button';
   button.onclick = () => {
     post.style.display = 'block';
