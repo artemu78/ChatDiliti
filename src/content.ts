@@ -1,5 +1,7 @@
 const createShowPostButton = (post: HTMLElement): void => {
-  const authorAndDate = post.querySelector("h4")?.parentElement?.parentElement?.parentElement?.innerText || 'Author and date not found';
+  const authorAndDate =
+    post.querySelector('h4')?.parentElement?.parentElement?.parentElement
+      ?.innerText || 'Author and date not found';
 
   const button = document.createElement('button');
   button.innerHTML = `${authorAndDate}`;
@@ -16,9 +18,10 @@ const hidePost = (post: HTMLElement): void => {
   createShowPostButton(post);
 };
 
-
 const processPosts = (): void => {
-  const posts = document.querySelectorAll<HTMLElement>("[data-pagelet^='FeedUnit']");
+  const posts = document.querySelectorAll<HTMLElement>(
+    "[data-pagelet^='FeedUnit']",
+  );
   posts.forEach((post) => {
     if (!post.classList.contains('processed')) {
       hidePost(post);
