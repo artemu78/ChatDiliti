@@ -24,10 +24,11 @@ const hidePost = (post: HTMLElement): void => {
   createShowPostButton(post);
 };
 
-const processPosts = (): void => {
-  const posts = document.querySelectorAll<HTMLElement>(
-    "[data-pagelet^='FeedUnit']",
+const processPosts = (feedContainer: HTMLElement): void => {
+  const posts = feedContainer.querySelectorAll<HTMLElement>(
+    'div.x1lliihq:not(:is([class*=" "]))',
   );
+  console.log(`ChatDiliti processing ${posts.length} posts`);
   posts.forEach((post) => {
     if (!post.classList.contains('processed')) {
       hidePost(post);
@@ -37,14 +38,16 @@ const processPosts = (): void => {
 };
 
 const observeFeed = (): void => {
-  const feedContainer = document.querySelector('[role="feed"]');
+  const feedContainer = document.querySelector(
+    'span#ssrb_feed_start',
+  )?.parentElement;
   if (!feedContainer) {
     setTimeout(observeFeed, 1000);
     return;
   }
 
   const observer = new MutationObserver((mutations) => {
-    processPosts();
+    processPosts(feedContainer);
   });
 
   observer.observe(feedContainer, { childList: true, subtree: true });
