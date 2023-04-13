@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Facebook Post Hider",
-  "version": "2.0.15",
+  "version": "2.0.17",
   "description": "Hide Facebook posts by default and display a Show Post button.",
   "permissions": [
     "activeTab"

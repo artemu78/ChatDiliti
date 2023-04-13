@@ -1,3 +1,5 @@
+var DatesHasBeenHidden = false;
+
 const getPostTime = (authorAndDate: HTMLElement): string => {
   const useElement = authorAndDate.querySelector('use');
   if (!useElement) {
@@ -11,6 +13,18 @@ const getPostTime = (authorAndDate: HTMLElement): string => {
   if (!timeElement) {
     return '';
   }
+
+  if (
+    !DatesHasBeenHidden &&
+    timeElement.parentElement &&
+    timeElement.parentElement.parentElement &&
+    timeElement.parentElement.parentElement.parentElement
+  ) {
+    timeElement.parentElement.parentElement.parentElement.style.display =
+      'none';
+    DatesHasBeenHidden = true;
+  }
+
   return timeElement.textContent || '';
 };
 
