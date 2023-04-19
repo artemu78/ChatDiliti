@@ -1,7 +1,26 @@
 var DatesHasBeenHidden = false;
 
-const getPostTime = (authorAndDate: HTMLElement): string => {
-  const useElement = authorAndDate.querySelector('use');
+const buttonSetGrayedOut = (post: HTMLElement, button: HTMLElement): void => {
+  debugger;
+  const authorAndDateElement = getAuthorAndDateElement(post);
+  const isCommercial =
+    authorAndDateElement &&
+    !!authorAndDateElement.querySelector("a[href^='/ads/']");
+  if (isCommercial) {
+    button.classList.add('font-size12');
+    button.style.border = '1px solid red';
+  } else {
+    button.style.border = '1px solid blue';
+  }
+};
+
+const getAuthorAndDateElement = (
+  post: HTMLElement,
+): HTMLElement | null | undefined =>
+  post.querySelector('h4')?.parentElement?.parentElement?.parentElement;
+
+const getPostTime = (authorAndDateElement: HTMLElement): string => {
+  const useElement = authorAndDateElement.querySelector('use');
   if (!useElement) {
     return '';
   }
@@ -28,9 +47,14 @@ const getPostTime = (authorAndDate: HTMLElement): string => {
   return timeElement.textContent || '';
 };
 
+const getPostReason = (post: HTMLElement): string =>
+  post.querySelector('.xcnsx8t')?.textContent || '';
+
 const createShowPostButton = (post: HTMLElement): void => {
-  const authorAndDateElement =
-    post.querySelector('h4')?.parentElement?.parentElement?.parentElement;
+  const authorAndDateElement = getAuthorAndDateElement(post);
+  const isCommercial =
+    authorAndDateElement &&
+    !!authorAndDateElement.querySelector("a[href^='/ads/']");
   const authorAndDate =
     authorAndDateElement?.innerText || 'Author and date not found';
   const postTime = authorAndDateElement
@@ -39,19 +63,39 @@ const createShowPostButton = (post: HTMLElement): void => {
 
   const postMessage =
     post.querySelector('[data-ad-preview=message]')?.textContent || '';
+
+  const postReason = getPostReason(post);
+
   const svg = post.querySelector('svg')?.cloneNode(true) as HTMLElement;
   svg.style.flexShrink = '0';
   svg.style.marginRight = '8px';
 
+  const isGrayedOut = postReason || isCommercial;
+
   const button = document.createElement('button');
-  button.className = 'custom-button';
+  button.onclick = () => {
+    post.style.display = 'block';
+    button.style.display = 'none';
+  };
+
+  button.classList.add('custom-button');
+  if (isGrayedOut) {
+    button.classList.add('font-size12');
+  } else {
+    button.classList.add('font-size14');
+  }
 
   const buttonContent = document.createElement('div');
   buttonContent.className = 'button-content';
   const textContent = document.createElement('div');
   textContent.className = 'text-content';
+
+  const reason = document.createElement('span');
+  reason.className = 'message';
+  reason.textContent = postReason;
+
   const title = document.createElement('span');
-  title.className = 'title';
+  title.className = isGrayedOut ? 'title-grayed' : 'title';
   title.textContent = `${authorAndDate} / ${postTime}`;
   const message = document.createElement('p');
   message.className = 'message';
@@ -60,19 +104,14 @@ const createShowPostButton = (post: HTMLElement): void => {
   button.appendChild(buttonContent);
   buttonContent.appendChild(svg);
   buttonContent.appendChild(textContent);
+  textContent.appendChild(reason);
   textContent.appendChild(title);
   textContent.appendChild(message);
 
-  button.onclick = () => {
-    post.style.display = 'block';
-    button.style.display = 'none';
-  };
   post.parentElement?.insertBefore(button, post);
-};
-
-const hidePost = (post: HTMLElement): void => {
-  post.style.display = 'none';
-  createShowPostButton(post);
+  window.setTimeout(() => {
+    buttonSetGrayedOut(post, button);
+  }, 3000); // wait for the post to be grayed out
 };
 
 const processPosts = (feedContainer: HTMLElement): void => {
@@ -81,7 +120,8 @@ const processPosts = (feedContainer: HTMLElement): void => {
   );
   posts.forEach((post) => {
     if (!post.classList.contains('processed')) {
-      hidePost(post);
+      createShowPostButton(post);
+      post.style.display = 'none';
       post.classList.add('processed');
     }
   });
